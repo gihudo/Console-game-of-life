@@ -9,12 +9,13 @@ public:
 	
 	static void SetConsoleTextColor(int l);
 
-	static int GetRows();
-	static int GetColumns();
+	static short GetRows();
+	static short GetColumns();
 private:
-	static int rows;
-	static int columns;
+	static short rows;
+	static short columns;
 
+	static void HideCursor();
 	static void RemoveScrollbar();
 	static void FixConsoleSize();
 	static void SetConsoleSize(int width, int height);

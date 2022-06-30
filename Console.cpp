@@ -1,8 +1,8 @@
 #include "Console.h"
 #include <winuser.h>
 
-int Console::columns = 120;
-int Console::rows = 30;
+short Console::rows = 30;
+short Console::columns = 120;
 
 void Console::SetConsoleTextColor(int l)
 {
@@ -21,6 +21,7 @@ void Console::SetConsole(int width, int height)
     Console::rows = info.srWindow.Bottom - info.srWindow.Top + 1;;
     FixConsoleSize();
     RemoveScrollbar();
+    HideCursor();
 }
 
 void Console::SetConsoleSize(int width, int height)
@@ -38,7 +39,16 @@ void Console::FixConsoleSize()
     DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_SIZE, 0);
 }
 
-void Console::RemoveScrollbar() 
+void Console::HideCursor()
+{
+    HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_CURSOR_INFO info;
+    info.dwSize = 100;
+    info.bVisible = FALSE;
+    SetConsoleCursorInfo(consoleHandle, &info);
+}
+
+void Console::RemoveScrollbar()
 {
     CONSOLE_SCREEN_BUFFER_INFO info;
     HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -51,7 +61,7 @@ void Console::RemoveScrollbar()
     SetConsoleScreenBufferSize(handle, new_size);
 }
 
-int Console::GetColumns()
+short Console::GetColumns()
 {
     if (&columns == nullptr)
         return 0;
@@ -59,7 +69,7 @@ int Console::GetColumns()
     return columns;
 }
 
-int Console::GetRows()
+short Console::GetRows()
 {
     if (&rows == nullptr)
         return 0;

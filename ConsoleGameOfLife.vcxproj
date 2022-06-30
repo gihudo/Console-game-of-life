@@ -139,13 +139,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ConsoleGameOfLife.cpp" />
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="Console.cpp" />
-    <ClCompile Include="Start.cpp" />
+    <ClCompile Include="GameEngine.cpp" />
+    <ClCompile Include="GameOfLife.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Console.h" />
-    <ClInclude Include="Start.h" />
+    <ClInclude Include="GameEngine.h" />
+    <ClInclude Include="GameOfLife.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
