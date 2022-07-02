@@ -15,6 +15,7 @@ private:
 	static short rows;
 	static short columns;
 
+	static void SetFontSize(int width, int height = 0);
 	static void HideCursor();
 	static void RemoveScrollbar();
 	static void FixConsoleSize();

@@ -1,5 +1,6 @@
 ﻿#include "GameOfLife.h"
 #include "Console.h"
+#include <Windows.h>
 
 int main()
 {
@@ -8,6 +9,6 @@ int main()
     std::cin >> width >> height;
 
     Console::SetConsole(width, height);
-    Console::SetConsoleTextColor(2);
+    Console::SetConsoleTextColor(4);
     GameOfLife::Init();
 }

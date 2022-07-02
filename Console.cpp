@@ -4,16 +4,9 @@
 short Console::rows = 30;
 short Console::columns = 120;
 
-void Console::SetConsoleTextColor(int l)
-{
-
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-
-    SetConsoleTextAttribute(hConsole, l);
-}
-
 void Console::SetConsole(int width, int height)
 {
+    SetFontSize(width / 200 + 5);
     SetConsoleSize(width, height);
     CONSOLE_SCREEN_BUFFER_INFO info;
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
@@ -75,4 +68,24 @@ short Console::GetRows()
         return 0;
 
     return rows;
+}
+
+void Console::SetConsoleTextColor(int l)
+{
+
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    SetConsoleTextAttribute(hConsole, l);
+}
+
+void Console::SetFontSize(int width, int height)
+{
+    CONSOLE_FONT_INFOEX cfi;
+    cfi.cbSize = sizeof(cfi);
+    cfi.nFont = 0;
+    cfi.dwFontSize.X = height;
+    cfi.dwFontSize.Y = width;
+    cfi.FontFamily = FF_DONTCARE;
+    cfi.FontWeight = FW_NORMAL;
+    SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
 }

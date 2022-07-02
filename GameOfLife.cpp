@@ -14,12 +14,12 @@ void GameOfLife::Init()
     {
         DrawCells(gameEngine);
         DrawFrame(Console::GetRows(), Console::GetColumns());
-        //Sleep(50);
+        Sleep(20);
         gameEngine.NextGen();
     }
 }
 
-char GameOfLife::Cell = '.';
+char GameOfLife::Cell = '#';
 
 void GameOfLife::DrawCells(GameOfLifeEngine &gameEngine)
 {
