@@ -1,5 +1,5 @@
 #pragma once
-#include "GameEngine.h"
+#include "GameOfLifeEngine.h"
 
 class GameOfLife
 {
@@ -8,7 +8,7 @@ public:
 
     static char Cell;
 private:
-    static void DrawCells(GameEngine &gameEngine);
+    static void DrawCells(GameOfLifeEngine &gameEngine);
     static void DrawFrame(int rows, int columns);
 };
 

@@ -1,7 +1,7 @@
-#include "GameEngine.h"
+#include "GameOfLifeEngine.h"
 #include <time.h>
 
-GameEngine::GameEngine(int rows, int cols, int density): ROWS(rows), COLS(cols)
+GameOfLifeEngine::GameOfLifeEngine(int rows, int cols, int density): ROWS(rows), COLS(cols)
 {
 	srand(time(NULL));
 
@@ -18,7 +18,7 @@ GameEngine::GameEngine(int rows, int cols, int density): ROWS(rows), COLS(cols)
 	}
 }
 
-int GameEngine::CountNeighbours(int x, int y)
+int GameOfLifeEngine::CountNeighbours(int x, int y)
 {
 	int count = 0;
 
@@ -30,9 +30,9 @@ int GameEngine::CountNeighbours(int x, int y)
 			int row = (y + i + ROWS) % ROWS;
 
 			bool isSelf = col == x && row == y;
-			bool hasCell = field[row][col];
+			bool hasLife = field[row][col];
 
-			if (!isSelf && hasCell)
+			if (!isSelf && hasLife)
 				count++;
 		}
 	}
@@ -40,7 +40,7 @@ int GameEngine::CountNeighbours(int x, int y)
 	return count;
 }
 
-void GameEngine::NextGen()
+void GameOfLifeEngine::NextGen()
 {
 	std::vector<std::vector<bool>> newField;
 
@@ -66,12 +66,34 @@ void GameEngine::NextGen()
 	field = newField;
 }
 
-std::vector<std::vector<bool>> GameEngine::GetCurrentGen()
+std::vector<std::vector<bool>> GameOfLifeEngine::GetCurrentGen()
 {
 	return field;
 }
 
-int GameEngine::GetNumberOfGen()
+int GameOfLifeEngine::GetNumberOfGen()
 {
 	return NumberOfGen;
 }
+
+
+/*
+int count = 0;
+
+	for (int i = -1; i < 2; i++)
+	{
+		for (int j = -1; j < 2; j++)
+		{
+			int col = (x + j + COLS) % COLS;
+			int row = (y + i + ROWS) % ROWS;
+
+			bool isSelf = col == x && row == y;
+			bool hasCell = field[row][col];
+
+			if (!isSelf && hasCell)
+				count++;
+		}
+	}
+
+	return count;
+*/

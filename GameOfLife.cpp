@@ -1,38 +1,37 @@
 #include "Console.h"
-#include "GameEngine.h"
+#include "GameOfLifeEngine.h"
 #include "GameOfLife.h"
 
 void GameOfLife::Init()
 {
-    GameEngine gameEngine
+    GameOfLifeEngine gameEngine
     (
-        Console::GetRows() - 2,     //rows
-        Console::GetColumns() - 2, //columns
-        3                         //density
+        Console::GetRows(),     //rows
+        Console::GetColumns(), //columns
+        10                    //density
     );
-
     while (true)
     {
         DrawCells(gameEngine);
         DrawFrame(Console::GetRows(), Console::GetColumns());
-        Sleep(300);
+        //Sleep(50);
         gameEngine.NextGen();
     }
 }
 
-char GameOfLife::Cell = ',';
+char GameOfLife::Cell = '.';
 
-void GameOfLife::DrawCells(GameEngine &gameEngine)
+void GameOfLife::DrawCells(GameOfLifeEngine &gameEngine)
 {
     auto field = gameEngine.GetCurrentGen();
     char* cells = new char[(Console::GetRows()) * (Console::GetColumns()) + 1];
-    cells[(Console::GetRows() - 2) * (Console::GetColumns() - 2)] = '\0';
+    cells[Console::GetRows() * Console::GetColumns()] = '\0';
     for (int y = 0; y < field.size(); y++)
     {
         for (int x = 0; x < field[y].size(); x++)
             cells[y * field[y].size() + x] = field[y][x] ? Cell : ' ';
     }
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { 1, 1});
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { 0, 0 });
     printf(cells);
 }
 

@@ -3,7 +3,11 @@
 
 int main()
 {
-    Console::SetConsole(500, 500);
+    int width;
+    int height;
+    std::cin >> width >> height;
+
+    Console::SetConsole(width, height);
     Console::SetConsoleTextColor(2);
     GameOfLife::Init();
 }

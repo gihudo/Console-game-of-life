@@ -141,12 +141,12 @@
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Console.cpp" />
-    <ClCompile Include="GameEngine.cpp" />
+    <ClCompile Include="GameOfLifeEngine.cpp" />
     <ClCompile Include="GameOfLife.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Console.h" />
-    <ClInclude Include="GameEngine.h" />
+    <ClInclude Include="GameOfLifeEngine.h" />
     <ClInclude Include="GameOfLife.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

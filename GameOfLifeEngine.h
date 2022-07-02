@@ -1,14 +1,14 @@
 #pragma once
 #include <vector>
 
-class GameEngine
+class GameOfLifeEngine
 {
 public:
-	GameEngine(int rows, int cols, int density);
+	GameOfLifeEngine(int rows, int cols, int density);
 
 	void NextGen();
 	int GetNumberOfGen();
-	
+		
 	std::vector<std::vector<bool>> GetCurrentGen();
 private:
 	std::vector<std::vector<bool>> field;
