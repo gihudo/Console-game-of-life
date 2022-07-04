@@ -6,7 +6,7 @@ short Console::columns = 120;
 
 void Console::SetConsole(int width, int height)
 {
-    SetFontSize(width / 200 + 5);
+    SetFontSize(20 - width / 200);
     SetConsoleSize(width, height);
     CONSOLE_SCREEN_BUFFER_INFO info;
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);

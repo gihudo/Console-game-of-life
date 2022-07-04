@@ -14,7 +14,7 @@ void GameOfLife::Init()
     {
         DrawCells(gameEngine);
         DrawFrame(Console::GetRows(), Console::GetColumns());
-        Sleep(20);
+        Sleep(100);
         gameEngine.NextGen();
     }
 }

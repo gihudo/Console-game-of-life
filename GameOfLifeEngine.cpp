@@ -75,25 +75,3 @@ int GameOfLifeEngine::GetNumberOfGen()
 {
 	return NumberOfGen;
 }
-
-
-/*
-int count = 0;
-
-	for (int i = -1; i < 2; i++)
-	{
-		for (int j = -1; j < 2; j++)
-		{
-			int col = (x + j + COLS) % COLS;
-			int row = (y + i + ROWS) % ROWS;
-
-			bool isSelf = col == x && row == y;
-			bool hasCell = field[row][col];
-
-			if (!isSelf && hasCell)
-				count++;
-		}
-	}
-
-	return count;
-*/
