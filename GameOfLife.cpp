@@ -1,3 +1,5 @@
+#include <Windows.h>
+#include <string>
 #include "Console.h"
 #include "GameOfLifeEngine.h"
 #include "GameOfLife.h"
@@ -15,11 +17,17 @@ void GameOfLife::Init()
         DrawCells(gameEngine);
         DrawFrame(Console::GetRows(), Console::GetColumns());
         Sleep(100);
+        SetConsoleTitleA(std::to_string(gameEngine.GetNumberOfGen()).c_str());
         gameEngine.NextGen();
     }
 }
 
-char GameOfLife::Cell = '#';
+void GameOfLife::SetCell(char cell)
+{
+    GameOfLife::Cell = cell;
+}
+
+char GameOfLife::Cell = '?';
 
 void GameOfLife::DrawCells(GameOfLifeEngine &gameEngine)
 {

@@ -4,9 +4,10 @@
 short Console::rows = 30;
 short Console::columns = 120;
 
-void Console::SetConsole(int width, int height)
+void Console::SetConsole(int width, int height, int resolution)
 {
-    SetFontSize(20 - width / 200);
+    resolution = resolution > 0 ? resolution : 1;
+    SetFontSizeInPixels(10 + width / (100 * resolution), 10 + width / (100 * resolution));
     SetConsoleSize(width, height);
     CONSOLE_SCREEN_BUFFER_INFO info;
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
@@ -70,15 +71,15 @@ short Console::GetRows()
     return rows;
 }
 
-void Console::SetConsoleTextColor(int l)
+void Console::SetConsoleTextColor(int colorId)
 {
 
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
-    SetConsoleTextAttribute(hConsole, l);
+    SetConsoleTextAttribute(hConsole, colorId);
 }
 
-void Console::SetFontSize(int width, int height)
+void Console::SetFontSizeInPixels(int width, int height)
 {
     CONSOLE_FONT_INFOEX cfi;
     cfi.cbSize = sizeof(cfi);

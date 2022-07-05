@@ -5,9 +5,10 @@ class GameOfLife
 {
 public:
     static void Init();
-
-    static char Cell;
+    static void SetCell(char cell);
 private:
+    static char Cell;
+
     static void DrawCells(GameOfLifeEngine &gameEngine);
     static void DrawFrame(int rows, int columns);
 };

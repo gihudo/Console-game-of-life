@@ -5,8 +5,7 @@
 class Console
 {
 public:
-	static void SetConsole(int width, int height);
-	
+	static void SetConsole(int width, int height, int resolution);
 	static void SetConsoleTextColor(int l);
 
 	static short GetRows();
@@ -15,7 +14,7 @@ private:
 	static short rows;
 	static short columns;
 
-	static void SetFontSize(int width, int height = 0);
+	static void SetFontSizeInPixels(int width, int height);
 	static void HideCursor();
 	static void RemoveScrollbar();
 	static void FixConsoleSize();
