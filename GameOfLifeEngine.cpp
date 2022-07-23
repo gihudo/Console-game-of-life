@@ -1,5 +1,4 @@
 #include "GameOfLifeEngine.h"
-#include <time.h>
 
 GameOfLifeEngine::GameOfLifeEngine(int rows, int cols, int density): ROWS(rows), COLS(cols)
 {

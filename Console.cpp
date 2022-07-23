@@ -1,5 +1,4 @@
 #include "Console.h"
-#include <winuser.h>
 
 short Console::rows = 30;
 short Console::columns = 120;
@@ -7,7 +6,7 @@ short Console::columns = 120;
 void Console::SetConsole(int width, int height, int resolution)
 {
     resolution = resolution > 0 ? resolution : 1;
-    SetFontSizeInPixels(10 + width / (100 * resolution), 10 + width / (100 * resolution));
+    SetFontSizeInPixels(resolution + 5, resolution + 5);
     SetConsoleSize(width, height);
     CONSOLE_SCREEN_BUFFER_INFO info;
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);

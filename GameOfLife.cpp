@@ -1,5 +1,3 @@
-#include <Windows.h>
-#include <string>
 #include "Console.h"
 #include "GameOfLifeEngine.h"
 #include "GameOfLife.h"
@@ -16,7 +14,7 @@ void GameOfLife::Init()
     {
         DrawCells(gameEngine);
         DrawFrame(Console::GetRows(), Console::GetColumns());
-        Sleep(100);
+        Sleep(50);
         SetConsoleTitleA(std::to_string(gameEngine.GetNumberOfGen()).c_str());
         gameEngine.NextGen();
     }
@@ -41,6 +39,7 @@ void GameOfLife::DrawCells(GameOfLifeEngine &gameEngine)
     }
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { 0, 0 });
     printf(cells);
+    delete[] cells;
 }
 
 void GameOfLife::DrawFrame(int rows, int columns)
@@ -55,7 +54,7 @@ void GameOfLife::DrawFrame(int rows, int columns)
 
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { 0, 0 });
     std::cout << horizontal;
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { 0, Console::GetRows() - 1});
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { 0, static_cast<short>(Console::GetRows() - 1)});
     std::cout << horizontal;
 
 
@@ -67,7 +66,7 @@ void GameOfLife::DrawFrame(int rows, int columns)
 
     for (short i = 1; i < Console::GetRows() - 1 ; i++)
     {
-        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { Console::GetColumns() - 1, i});
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { static_cast<short>(Console::GetColumns() - 1), i});
         std::cout << vertical;
     }
 }

@@ -1,7 +1,5 @@
 ﻿#include "GameOfLife.h"
 #include "Console.h"
-#include <Windows.h>
-
 
 int main()
 {
@@ -10,7 +8,7 @@ int main()
     int resolution;
     std::cout << "width && height in pixels: ";
     std::cin >> width >> height;
-    std::cout << "resolution(higher -> smaller cells): ";
+    std::cout << "resolution(higher -> bigger cells): ";
     std::cin >> resolution;
 
     Console::SetConsole(width, height, resolution);

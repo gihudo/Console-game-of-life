@@ -1,4 +1,6 @@
 #pragma once
+#include <iostream>
+#include <string>
 #include "GameOfLifeEngine.h"
 
 class GameOfLife
