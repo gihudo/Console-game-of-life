@@ -7,6 +7,7 @@ public:
 	static void SetConsole(int width, int height, int resolution);
 	static void SetConsoleTextColor(int l);
 
+	static void GetConsolePos(int& x, int& y);
 	static short GetRows();
 	static short GetColumns();
 private:

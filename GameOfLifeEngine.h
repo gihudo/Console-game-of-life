@@ -9,7 +9,8 @@ public:
 
 	void NextGen();
 	int GetNumberOfGen();
-		
+	void Add(double x, double y, double x1, double y1);
+
 	std::vector<std::vector<bool>> GetCurrentGen();
 private:
 	std::vector<std::vector<bool>> field;

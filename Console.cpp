@@ -17,6 +17,16 @@ void Console::SetConsole(int width, int height, int resolution)
     HideCursor();
 }
 
+void Console::GetConsolePos(int& x, int& y)
+{
+    RECT rect = { NULL };
+    if (GetWindowRect(GetConsoleWindow(), &rect))
+    {
+        x = rect.left;
+        y = rect.top;
+    }
+}
+
 void Console::SetConsoleSize(int width, int height)
 {
     HWND console = GetConsoleWindow();

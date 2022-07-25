@@ -1,6 +1,7 @@
 #include "Console.h"
 #include "GameOfLifeEngine.h"
 #include "GameOfLife.h"
+#include <conio.h>
 
 void GameOfLife::Init()
 {
@@ -8,15 +9,35 @@ void GameOfLife::Init()
     (
         Console::GetRows(),     //rows
         Console::GetColumns(), //columns
-        10                    //density
+        15                    //density
     );
+
+    gameEngine.NextGen();
     while (true)
     {
         DrawCells(gameEngine);
         DrawFrame(Console::GetRows(), Console::GetColumns());
+
         Sleep(50);
+
         SetConsoleTitleA(std::to_string(gameEngine.GetNumberOfGen()).c_str());
         gameEngine.NextGen();
+      
+        if (GetAsyncKeyState(VK_SPACE))
+            for (int i = 0; i < 500 ; i++)
+            {
+                int x;
+                int y;
+                Console::GetConsolePos(x, y);
+
+                POINT p;
+                GetCursorPos(&p);
+                SetConsoleTitleA((std::to_string(p.x) + ' ' + std::to_string(p.y) + ' ' + std::to_string(x) + ' ' + std::to_string(y)).c_str());
+
+                if ((p.x > x && p.x < x + 1280 - 25) && (p.y > y + 30 && p.y < y + 720))
+                    gameEngine.Add(p.x, p.y, x, y);
+            }
+        
     }
 }
 

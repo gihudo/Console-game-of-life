@@ -74,3 +74,15 @@ int GameOfLifeEngine::GetNumberOfGen()
 {
 	return NumberOfGen;
 }
+
+void GameOfLifeEngine::Add(double x, double y, double x1, double y1)
+{
+	try
+	{
+		field[((y - y1 - 35) / ((720 - 35) / static_cast<double>(ROWS)))][static_cast<int>((x - x1) / ((1280 - 25) / static_cast<double>(COLS)))] = true;
+	}
+	catch (const std::exception&)
+	{
+
+	}
+}
