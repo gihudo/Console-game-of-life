@@ -12,7 +12,7 @@ int main()
     std::cin >> resolution;*/
 
     //Console::SetConsole(width, height, resolution);
-    Console::SetConsole(1280, 720, 5);
+    Console::SetConsole(1280, 720, 2);
     Console::SetConsoleTextColor(3);
     GameOfLife::SetCell('#');
     GameOfLife::Init();
