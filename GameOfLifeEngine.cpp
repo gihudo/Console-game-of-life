@@ -75,7 +75,7 @@ int GameOfLifeEngine::GetNumberOfGen()
 	return NumberOfGen;
 }
 
-void GameOfLifeEngine::Add(double x, double y, double x1, double y1)
+void GameOfLifeEngine::Add(int x, int y)
 {
-	field[((y - y1 - 40) / ((720 - 40) / static_cast<double>(ROWS)))][static_cast<int>((x - x1) / ((1280 - 25) / static_cast<double>(COLS)))] = true;
+	field[y][x] = true;
 }

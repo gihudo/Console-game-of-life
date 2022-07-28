@@ -2,16 +2,21 @@
 #include "GameOfLifeEngine.h"
 #include "GameOfLife.h"
 
+#define headerheight 40 
+#define scrollwidth 25
+
+
+
 void GameOfLife::Init()
 {
     GameOfLifeEngine gameEngine
     (
         Console::GetRows(),     //rows
         Console::GetColumns(), //columns
-        15                    //density
+        1                    //density
     );
 
-    std::thread th1([](GameOfLifeEngine &gameEngine)
+    std::thread drawFrame([](GameOfLifeEngine &gameEngine)
         {
             while (true)
             {
@@ -20,34 +25,38 @@ void GameOfLife::Init()
                 gameEngine.NextGen();
 
                 Sleep(100);
-
                 SetConsoleTitleA(std::to_string(gameEngine.GetNumberOfGen()).c_str());
             }
         }, std::ref(gameEngine));
 
-    std::thread th2([](GameOfLifeEngine &gameEngine)
+    std::thread addingCells([](GameOfLifeEngine& gameEngine)
         {
             while (true)
             {
                 if (GetAsyncKeyState(VK_SPACE))
                 {
+                    int ConsolePosX;
+                    int ConsolePosY;
+                    POINT CursorPos;
+
                     int x;
                     int y;
-                    POINT p;
 
-                    for (int i = 0; i < 1000; i++)
-                    {                       
-                        Console::GetConsolePos(x, y);
-                        GetCursorPos(&p);
+                    Console::GetConsolePos(ConsolePosX, ConsolePosY);
+                    GetCursorPos(&CursorPos);
 
-                        if ((p.x > x && p.x < x + 1280 - 25) && (p.y > y + 30 && p.y < y + 720))
-                            gameEngine.Add(p.x, p.y, x, y);
-                    }
+                    if ((CursorPos.x > ConsolePosX && CursorPos.x < ConsolePosX + Console::GetWidth() - scrollwidth) &&
+                        (CursorPos.y > ConsolePosY + headerheight && CursorPos.y < ConsolePosY + Console::GetHeight()))
+                    {
+                        x = (CursorPos.x - ConsolePosX) / ((Console::GetWidth() - scrollwidth) / static_cast<double>(Console::GetColumns()));
+                        y = (CursorPos.y - ConsolePosY - headerheight) / ((Console::GetHeight() - headerheight) / static_cast<double>(Console::GetRows()));
+                        gameEngine.Add(x, y);
+                    }    
                 }
             }
         }, std::ref(gameEngine));
-    th1.join();
-    th2.join();
+    drawFrame.join();
+    addingCells.join();
 }
 
 void GameOfLife::SetCell(char cell)

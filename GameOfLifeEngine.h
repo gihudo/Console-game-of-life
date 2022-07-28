@@ -9,7 +9,7 @@ public:
 
 	void NextGen();
 	int GetNumberOfGen();
-	void Add(double x, double y, double x1, double y1);
+	void Add(int x, int y);
 
 	std::vector<std::vector<bool>> GetCurrentGen();
 private:

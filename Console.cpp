@@ -1,20 +1,27 @@
 #include "Console.h"
 
-short Console::rows = 30;
-short Console::columns = 120;
+short Console::rows = 0;
+short Console::columns = 0;
+
+int Console::Width = 0;
+int Console::Height = 0;
 
 void Console::SetConsole(int width, int height, int resolution)
 {
+    Console::Width = width;
+    Console::Height = height;
     resolution = resolution > 0 ? resolution : 1;
+
     SetFontSizeInPixels(resolution + 5, resolution + 5);
     SetConsoleSize(width, height);
-    CONSOLE_SCREEN_BUFFER_INFO info;
-    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
-    Console::columns = info.srWindow.Right - info.srWindow.Left + 1;;
-    Console::rows = info.srWindow.Bottom - info.srWindow.Top + 1;;
     FixConsoleSize();
     RemoveScrollbar();
     HideCursor();
+
+    CONSOLE_SCREEN_BUFFER_INFO info;
+    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
+    Console::columns = info.srWindow.Right - info.srWindow.Left + 1;
+    Console::rows = info.srWindow.Bottom - info.srWindow.Top + 1;
 }
 
 void Console::GetConsolePos(int& x, int& y)
@@ -66,18 +73,22 @@ void Console::RemoveScrollbar()
 
 short Console::GetColumns()
 {
-    if (&columns == nullptr)
-        return 0;
-
     return columns;
 }
 
 short Console::GetRows()
 {
-    if (&rows == nullptr)
-        return 0;
-
     return rows;
+}
+
+int Console::GetWidth()
+{
+    return Width;
+}
+
+int Console::GetHeight()
+{
+    return Height;
 }
 
 void Console::SetConsoleTextColor(int colorId)
