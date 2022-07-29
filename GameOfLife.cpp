@@ -5,7 +5,26 @@
 #define headerheight 40 
 #define scrollwidth 25
 
+void operation(std::function<void(int, int)> operation)
+{
+    int ConsolePosX;
+    int ConsolePosY;
+    POINT CursorPos;
 
+    int x;
+    int y;
+
+    Console::GetConsolePos(ConsolePosX, ConsolePosY);
+    GetCursorPos(&CursorPos);
+
+    if ((CursorPos.x > ConsolePosX && CursorPos.x < ConsolePosX + Console::GetWidth() - scrollwidth) &&
+        (CursorPos.y > ConsolePosY + headerheight && CursorPos.y < ConsolePosY + Console::GetHeight()))
+    {
+        x = (CursorPos.x - ConsolePosX) / ((Console::GetWidth() - scrollwidth) / static_cast<double>(Console::GetColumns()));
+        y = (CursorPos.y - ConsolePosY - headerheight) / ((Console::GetHeight() - headerheight) / static_cast<double>(Console::GetRows()));
+        operation(x,y);
+    }
+}
 
 void GameOfLife::Init()
 {
@@ -35,23 +54,13 @@ void GameOfLife::Init()
             {
                 if (GetAsyncKeyState(VK_SPACE))
                 {
-                    int ConsolePosX;
-                    int ConsolePosY;
-                    POINT CursorPos;
-
-                    int x;
-                    int y;
-
-                    Console::GetConsolePos(ConsolePosX, ConsolePosY);
-                    GetCursorPos(&CursorPos);
-
-                    if ((CursorPos.x > ConsolePosX && CursorPos.x < ConsolePosX + Console::GetWidth() - scrollwidth) &&
-                        (CursorPos.y > ConsolePosY + headerheight && CursorPos.y < ConsolePosY + Console::GetHeight()))
-                    {
-                        x = (CursorPos.x - ConsolePosX) / ((Console::GetWidth() - scrollwidth) / static_cast<double>(Console::GetColumns()));
-                        y = (CursorPos.y - ConsolePosY - headerheight) / ((Console::GetHeight() - headerheight) / static_cast<double>(Console::GetRows()));
-                        gameEngine.Add(x, y);
-                    }    
+                    auto addCells = std::bind(&GameOfLifeEngine::Add, &gameEngine, std::placeholders::_1, std::placeholders::_2);
+                    operation(addCells);
+                }
+                if (GetAsyncKeyState(VK_DELETE))
+                {
+                    auto DeleteCells = std::bind(&GameOfLifeEngine::Delete, &gameEngine, std::placeholders::_1, std::placeholders::_2);
+                    operation(DeleteCells);
                 }
             }
         }, std::ref(gameEngine));

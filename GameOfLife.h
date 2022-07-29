@@ -3,6 +3,7 @@
 #include <string>
 #include <conio.h>
 #include <thread>
+#include <functional>
 
 #include "GameOfLifeEngine.h"
 

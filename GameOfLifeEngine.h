@@ -10,6 +10,7 @@ public:
 	void NextGen();
 	int GetNumberOfGen();
 	void Add(int x, int y);
+	void Delete(int x, int y);
 
 	std::vector<std::vector<bool>> GetCurrentGen();
 private:
