@@ -15,6 +15,7 @@ public:
 private:
     static char Cell;
 
+    static void FindCursorPos(short &x, short &y);
     static void DrawCells(GameOfLifeEngine &gameEngine);
     static void DrawFrame(int rows, int columns);
 };

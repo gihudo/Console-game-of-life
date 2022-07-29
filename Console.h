@@ -1,7 +1,7 @@
 #pragma once
 #include <Windows.h>
 
-static class Console
+class Console
 {
 public:
 	static void SetConsole(int width, int height, int resolution);
