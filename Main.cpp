@@ -3,16 +3,9 @@
 
 int main()
 {
-    int width;
-    int height;
-    int resolution;
-    std::cout << "width && height in pixels: ";
-    std::cin >> width >> height;
-    std::cout << "resolution(higher -> bigger cells): ";
-    std::cin >> resolution;
-
-    Console::SetConsole(width, height, resolution);
+    Console::SetConsole(800, 800, 1);
     Console::SetConsoleTextColor(4);
     GameOfLife::SetCell('#');
+
     GameOfLife::Init();
 }

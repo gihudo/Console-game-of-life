@@ -74,3 +74,13 @@ int GameOfLifeEngine::GetNumberOfGen()
 {
 	return NumberOfGen;
 }
+
+void GameOfLifeEngine::Add(int x, int y)
+{
+	field[y][x] = true;
+}
+
+void GameOfLifeEngine::Delete(int x, int y)
+{
+	field[y][x] = false;
+}

@@ -1,6 +1,27 @@
 #include "Console.h"
 #include "GameOfLifeEngine.h"
 #include "GameOfLife.h"
+#include <functional>
+
+#define headerheight 40 
+#define scrollwidth 25
+
+void GameOfLife::FindCursorPos(short &x, short &y)
+{
+    int ConsolePosX;
+    int ConsolePosY;
+    POINT CursorPos;
+
+    Console::GetConsolePos(ConsolePosX, ConsolePosY);
+    GetCursorPos(&CursorPos);
+
+    if ((CursorPos.x > ConsolePosX && CursorPos.x < ConsolePosX + Console::GetWidth() - scrollwidth) &&
+        (CursorPos.y > ConsolePosY + headerheight && CursorPos.y < ConsolePosY + Console::GetHeight()))
+    {
+        x = (CursorPos.x - ConsolePosX) / ((Console::GetWidth() - scrollwidth) / static_cast<double>(Console::GetColumns()));
+        y = (CursorPos.y - ConsolePosY - headerheight) / ((Console::GetHeight() - headerheight) / static_cast<double>(Console::GetRows()));
+    }
+}
 
 void GameOfLife::Init()
 {
@@ -8,16 +29,51 @@ void GameOfLife::Init()
     (
         Console::GetRows(),     //rows
         Console::GetColumns(), //columns
-        10                    //density
+        1                    //density
     );
-    while (true)
-    {
-        DrawCells(gameEngine);
-        DrawFrame(Console::GetRows(), Console::GetColumns());
-        Sleep(50);
-        SetConsoleTitleA(std::to_string(gameEngine.GetNumberOfGen()).c_str());
-        gameEngine.NextGen();
-    }
+
+    std::thread drawFrame([](GameOfLifeEngine &gameEngine)
+        {
+            while (true)
+            {
+                DrawCells(gameEngine);
+                DrawFrame(Console::GetRows(), Console::GetColumns());
+                gameEngine.NextGen();
+
+                short x;
+                short y;
+                FindCursorPos(x, y);
+                SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { x, y });
+                Console::SetConsoleTextColor(2);
+                std::cout << "@";
+                Console::SetConsoleTextColor(4);
+
+                Sleep(50);
+                SetConsoleTitleA(std::to_string(gameEngine.GetNumberOfGen()).c_str());
+            }
+        }, std::ref(gameEngine));
+
+    std::thread addingCells([](GameOfLifeEngine& gameEngine)
+        {
+            while (true)
+            {
+                short x;
+                short y;
+
+                if (GetAsyncKeyState(VK_SPACE))
+                {
+                    FindCursorPos(x, y);
+                    gameEngine.Add(x, y);
+                }
+                if (GetAsyncKeyState(VK_DELETE))
+                {
+                    FindCursorPos(x, y);
+                    gameEngine.Delete(x, y);
+                }
+            }
+        }, std::ref(gameEngine));
+    drawFrame.join();
+    addingCells.join();
 }
 
 void GameOfLife::SetCell(char cell)
@@ -45,18 +101,18 @@ void GameOfLife::DrawCells(GameOfLifeEngine &gameEngine)
 void GameOfLife::DrawFrame(int rows, int columns)
 {
     std::string horizontal = "";
-    std::string vertical = "|";
+    char vertical = '|';
 
     for (int i = 0; i < columns; i++)
     {
         horizontal += '-';
     }
 
+    
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { 0, static_cast<short>(Console::GetRows())});
+    std::cout << horizontal;
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { 0, 0 });
     std::cout << horizontal;
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { 0, static_cast<short>(Console::GetRows() - 1)});
-    std::cout << horizontal;
-
 
     for (short i = 1; i < Console::GetRows() - 1; i++)
     {
