@@ -7,16 +7,9 @@
 
 #include "GameOfLifeEngine.h"
 
-class GameOfLife
+namespace GameOfLife 
 {
-public:
-    static void Init();
-    static void SetCell(char cell);
-private:
-    static char Cell;
-
-    static void FindCursorPos(short &x, short &y);
-    static void DrawCells(GameOfLifeEngine &gameEngine);
-    static void DrawFrame(int rows, int columns);
-};
+    void Init();
+    void SetCell(char cell);
+}
 

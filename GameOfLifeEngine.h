@@ -21,4 +21,3 @@ private:
 
 	int CountNeighbours(int x, int y);
 };
-
